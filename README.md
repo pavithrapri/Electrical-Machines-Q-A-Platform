@@ -88,13 +88,14 @@ electrical_machines_qa/
    GRANT ALL PRIVILEGES ON electrical_machines_qa.* TO 'qa_user'@'localhost';
    FLUSH PRIVILEGES;
    ```
-   
-# electrical_machines_qa/settings.py
+# Django settings.py (with .env integration)
+**electrical_machines_qa/settings.py**
 
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+# Load .env variables
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -102,6 +103,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "dummy-secret-key")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]  # Change this in production
+
+# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,6 +115,7 @@ INSTALLED_APPS = [
     'qa_app',  # Main app
 ]
 
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -142,6 +146,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'electrical_machines_qa.wsgi.application'
 
+# MySQL Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -156,6 +161,7 @@ DATABASES = {
     }
 }
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -163,12 +169,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# Localization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# Static & Media
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
@@ -180,6 +188,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # OpenAI API
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+
+
+
 
 6. **Environment variables**
    Create a `.env` file in the project root:
